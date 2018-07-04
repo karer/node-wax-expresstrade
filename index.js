@@ -13,6 +13,8 @@ const OfferState = require('./interfaces/ITrade/states')
 
 class ExpressTrade extends EventEmitter {
   constructor(options) {
+    super()
+
     // Check for config
     if (typeof options !== 'object') {
       throw new Error('Options not specified!')
@@ -44,7 +46,7 @@ class ExpressTrade extends EventEmitter {
     this.ICaseSite = new ICaseSite({ request: this.request })
     this.IEthereum = new IEthereum({ request: this.request })
     this.IItem = new IItem({ request: this.request })
-    this.ITrade = new ITrade({ request: this.request, generateToken: this.generateToken.bind(this) })
+    this.ITrade = new ITrade({ request: this.request, generateToken: () => this.generateToken() })
     this.IUser = new IUser({ request: this.request })
 
     // Polling
@@ -55,12 +57,12 @@ class ExpressTrade extends EventEmitter {
         throw new Error('pollInterval minimal value is 1000. Please change it!')
       }
 
-      startPolling(this.options.pollInterval)
+      this.startPolling(this.options.pollInterval)
     }
   }
 
   startPolling(interval) {
-    this.pollInterval = setInterval(poll, interval)
+    this.pollInterval = setInterval(() => this.poll(), interval)
   }
 
   stopPolling() {
@@ -72,7 +74,7 @@ class ExpressTrade extends EventEmitter {
     let offers
 
     try {
-      offers = this.ITrade.GetOffers({})
+      offers = (await this.ITrade.GetOffers({})).offers
     } catch (err) {
       console.log(`Cannot poll offers - ${err.message}`)
     }
