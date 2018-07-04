@@ -1,0 +1,31 @@
+{
+  "name": "wax-expresstrade",
+  "version": "1.0.0",
+  "description": "Promise-based Node API for WAX Expresstrade.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "wax",
+    "expresstrade",
+    "opskins",
+    "vgo"
+  ],
+  "homepage": "https://github.com/karer/node-wax-expresstrade",
+  "author": {
+    "name": "Kacper Geisheimer",
+    "email": "devkarer@gmail.com",
+    "url": "https://karermedia.pl"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/karer/node-wax-expresstrade"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "request": "^2.87.0",
+    "request-promise": "^4.2.2",
+    "speakeasy": "^2.0.0"
+  }
+}
