@@ -5,7 +5,7 @@
 ![license](https://img.shields.io/github/license/mashape/apistatus.svg)
 [![paypal](https://img.shields.io/badge/paypal-donate-yellow.svg)](https://www.paypal.me/devkarer/0usd)
 
-Powerful async/wait based Node.js implementation of [OPSkins WAX ExpressTrade](https://github.com/OPSkins/trade-opskins-api 'OPSkins WAX ExpressTrade').
+Powerful async/await based Node.js implementation of [OPSkins WAX ExpressTrade](https://github.com/OPSkins/trade-opskins-api 'OPSkins WAX ExpressTrade').
 
 Stop wasting time on coding endpoint communication, event polling and bothering with two factor authentication - just pass your api key with secret and use methods out-of-the-box.
 
@@ -15,11 +15,11 @@ Stop wasting time on coding endpoint communication, event polling and bothering 
 
 ## Powerful!
 
-:arrows_counterclockwise: We base on official implementation - it means, that interfaces, methods and responses are identically named as in [documentation](https://github.com/OPSkins/trade-opskins-api). E.g. [IUser/GetInventory](https://github.com/OPSkins/trade-opskins-api/blob/master/IUser/GetInventory.md) reffers to `API.IUser.GetInventory()` method.
+:arrows_counterclockwise: We base on official implementation - it means, that interfaces, methods and responses are identically named as in [documentation](https://github.com/OPSkins/trade-opskins-api). E.g. [IUser/GetInventory](https://github.com/OPSkins/trade-opskins-api/blob/master/IUser/GetInventory.md) refers to `API.IUser.GetInventory()` method.
 
 :rocket: The entire module is async/await friendly - so you do not need to worry about promisifying or callback hell.
 
-:sparkles: All trade-offers updates are emitted as event, which makes catching changes unbeliveable easy! E.g. `API.on('OfferChanged', offer => console.log(offer))`
+:sparkles: All trade-offers updates are emitted as event, which makes catching changes unbelievably easy! E.g. `API.on('OfferChanged', offer => console.log(offer))`
 
 :fire: Two-Factor authentication? Naah! wax-expresstrade handles all this stuff with no additional configuration, just pass twoFactorSecret and... that's all!
 
@@ -81,7 +81,7 @@ Emitted when we successfully send an offer.
 
 - `offer` - [Trade Offer Object](https://github.com/OPSkins/trade-opskins-api/blob/master/ITrade.md#standard-trade-offer-object)
 
-Emitted when we receive an new offer.
+Emitted when we receive new offer.
 
 ### OfferAccepted
 
@@ -117,16 +117,16 @@ Emitted when an offer expires.
 
 - `offer` - [Trade Offer Object](https://github.com/OPSkins/trade-opskins-api/blob/master/ITrade.md#standard-trade-offer-object)
 
-Emitted when an case offer gets pending state.
+Emitted when the case offer gets pending state.
 
 ### OfferCaseExpired
 
 - `offer` - [Trade Offer Object](https://github.com/OPSkins/trade-opskins-api/blob/master/ITrade.md#standard-trade-offer-object)
 
-Emitted when an case offer expires.
+Emitted when the case offer expires.
 
 ### OfferCaseFailed
 
 - `offer` - [Trade Offer Object](https://github.com/OPSkins/trade-opskins-api/blob/master/ITrade.md#standard-trade-offer-object)
 
-Emitted when an case offer fails.
+Emitted when the case offer fails.
