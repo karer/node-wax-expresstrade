@@ -108,7 +108,7 @@ class ExpressTrade extends EventEmitter {
             this.emit('OfferAccepted', offer)
             break
           case OfferState.STATE_EXPIRED:
-            this.emit('OfferExpird', offer)
+            this.emit('OfferExpired', offer)
             break
           case OfferState.STATE_CANCELLED:
             this.emit('OfferCancelled', offer)
