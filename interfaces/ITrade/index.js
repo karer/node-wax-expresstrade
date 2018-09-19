@@ -101,7 +101,10 @@ class ITrade extends ETInterface {
     if (!res.response) {
       throw new Error(res.message)
     }
-
+    
+    res.response.total_pages = res.total_pages;
+    res.response.current_page = res.current_page;
+    
     return res.response
   }
 
