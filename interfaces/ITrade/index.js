@@ -23,7 +23,7 @@ class ITrade extends ETInterface {
       throw new Error('offerId not specified!')
     }
 
-    const url = this.getUrl() + 'AcceptOffer/v1'
+    const url = this.getUrl() + 'CancelOffer/v1'
     const form = { offer_id: offerId }
     const res = await this.request.post({ url, form })
 
@@ -153,7 +153,7 @@ class ITrade extends ETInterface {
 
     const url = this.getUrl() + 'SendOffer/v1'
     const twofactor_code = this.generateToken()
-    const form = { twofactor_code, uid, token, items, message }
+    const form = { twofactor_code, uid, token, items: items.toString(), message }
     const res = await this.request.post({ url, form })
 
     if (!res.response) {
@@ -163,7 +163,7 @@ class ITrade extends ETInterface {
     return res.response.offer
   }
 
-  async SendOfferToSteamId({ steamId, items }) {
+  async SendOfferToSteamId({ steamId, items, message }) {
     if (steamId === undefined) {
       throw new Error('steamId not specified!')
     }
@@ -174,7 +174,7 @@ class ITrade extends ETInterface {
 
     const url = this.getUrl() + 'SendOfferToSteamId/v1'
     const twofactor_code = this.generateToken()
-    const form = { twofactor_code, steam_id: steamId, items }
+    const form = { twofactor_code, steam_id: steamId, items: items.toString(), message }
     const res = await this.request.post({ url, form })
 
     if (!res.response) {
