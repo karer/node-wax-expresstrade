@@ -23,7 +23,7 @@ class ITrade extends ETInterface {
       throw new Error('offerId not specified!')
     }
 
-    const url = this.getUrl() + 'AcceptOffer/v1'
+    const url = this.getUrl() + 'CancelOffer/v1'
     const form = { offer_id: offerId }
     const res = await this.request.post({ url, form })
 
