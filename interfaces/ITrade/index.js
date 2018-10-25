@@ -101,10 +101,10 @@ class ITrade extends ETInterface {
     if (!res.response) {
       throw new Error(res.message)
     }
-    
-    res.response.total_pages = res.total_pages;
-    res.response.current_page = res.current_page;
-    
+
+    res.response.total_pages = res.total_pages
+    res.response.current_page = res.current_page
+
     return res.response
   }
 
@@ -138,7 +138,7 @@ class ITrade extends ETInterface {
     return res.response
   }
 
-  async SendOffer({ uid, token, items, message }) {
+  async SendOffer({ uid, token, itemsToSend, itemsToReceive, message }) {
     if (uid === undefined) {
       throw new Error('uid not specified!')
     }
@@ -147,13 +147,17 @@ class ITrade extends ETInterface {
       throw new Error('token not specified!')
     }
 
-    if (items === undefined) {
-      throw new Error('items not specified!')
+    if (itemsToSend === undefined) {
+      throw new Error('itemsToSend not specified!')
+    }
+
+    if (itemsToReceive === undefined) {
+      throw new Error('itemsToReceive not specified!')
     }
 
     const url = this.getUrl() + 'SendOffer/v1'
     const twofactor_code = this.generateToken()
-    const form = { twofactor_code, uid, token, items: items.toString(), message }
+    const form = { twofactor_code, uid, token, itemsToSend: itemsToSend.toString(), itemsToReceive: itemsToReceive.toString(), message }
     const res = await this.request.post({ url, form })
 
     if (!res.response) {
@@ -163,18 +167,22 @@ class ITrade extends ETInterface {
     return res.response.offer
   }
 
-  async SendOfferToSteamId({ steamId, items, message }) {
+  async SendOfferToSteamId({ steamId, itemsToSend, itemsToReceive, message }) {
     if (steamId === undefined) {
       throw new Error('steamId not specified!')
     }
 
-    if (items === undefined) {
-      throw new Error('items not specified!')
+    if (itemsToSend === undefined) {
+      throw new Error('itemsToSend not specified!')
+    }
+
+    if (itemsToReceive === undefined) {
+      throw new Error('itemsToReceive not specified!')
     }
 
     const url = this.getUrl() + 'SendOfferToSteamId/v1'
     const twofactor_code = this.generateToken()
-    const form = { twofactor_code, steam_id: steamId, items: items.toString(), message }
+    const form = { twofactor_code, steam_id: steamId, itemsToSend: itemsToSend.toString(), itemsToReceive: itemsToReceive.toString(), message }
     const res = await this.request.post({ url, form })
 
     if (!res.response) {
