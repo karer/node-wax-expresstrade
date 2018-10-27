@@ -157,7 +157,7 @@ class ITrade extends ETInterface {
 
     const url = this.getUrl() + 'SendOffer/v1'
     const twofactor_code = this.generateToken()
-    const form = { twofactor_code, uid, token, itemsToSend: itemsToSend.toString(), itemsToReceive: itemsToReceive.toString(), message }
+    const form = { twofactor_code, uid, token, items_to_send: itemsToSend.toString(), items_to_receive: itemsToReceive.toString(), message }
     const res = await this.request.post({ url, form })
 
     if (!res.response) {
@@ -182,7 +182,7 @@ class ITrade extends ETInterface {
 
     const url = this.getUrl() + 'SendOfferToSteamId/v1'
     const twofactor_code = this.generateToken()
-    const form = { twofactor_code, steam_id: steamId, itemsToSend: itemsToSend.toString(), itemsToReceive: itemsToReceive.toString(), message }
+    const form = { twofactor_code, steam_id: steamId, items_to_send: itemsToSend.toString(), items_to_receive: itemsToReceive.toString(), message }
     const res = await this.request.post({ url, form })
 
     if (!res.response) {
