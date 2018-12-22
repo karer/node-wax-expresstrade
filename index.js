@@ -76,7 +76,7 @@ class ExpressTrade extends EventEmitter {
     try {
       offers = (await this.ITrade.GetOffers({})).offers
     } catch (err) {
-      console.log(`Cannot poll offers - ${err.message}`)
+      console.error(`Cannot poll offers - ${err.message}`)
 
       return
     }
