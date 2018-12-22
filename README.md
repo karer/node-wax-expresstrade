@@ -32,7 +32,7 @@ const ExpressTrade = require('wax-expresstrade')
 const API = new ExpressTrade({
   apiKey: 'OPSkins API Key goes here',
   twoFactorSecret: 'Secret from opskins mobile auth goes here',
-  pollInterval: 3000 // Optional, but just set this one value and module will handle all offers updates automatically!
+  pollInterval: 5000 // Optional, but just set this one value and module will handle all offers updates automatically!
 })
 
 // It's ready to use, wasn't it simple?
