@@ -65,7 +65,10 @@ class ITrade extends ETInterface {
   async GetOffers({ uid, state, type, page = 1, perPage = 100, ids }) {
     const url = this.getUrl() + 'GetOffers/v1'
 
-    const res = await this.request.get({ url, qs: { uid, state, type, page, per_page: perPage, ids } })
+    const res = await this.request.get({
+      url,
+      qs: { uid, state, type, page, per_page: perPage, ids: ids.toString() }
+    })
 
     if (!res.response) {
       throw new Error(res.message)
@@ -86,7 +89,7 @@ class ITrade extends ETInterface {
     return res.response
   }
 
-  async GetUserInventory({ uid, appId, page = 1, perPage, search }) {
+  async GetUserInventory({ uid, appId, page = 1, perPage, search, sort }) {
     if (uid === undefined) {
       throw new Error('uid not specified!')
     }
@@ -96,7 +99,10 @@ class ITrade extends ETInterface {
 
     const url = this.getUrl() + 'GetUserInventory/v1'
 
-    const res = await this.request.get({ url, qs: { uid, app_id: appId, page, per_page: perPage, search } })
+    const res = await this.request.get({
+      url,
+      qs: { uid, app_id: appId, page, per_page: perPage, search, sort }
+    })
 
     if (!res.response) {
       throw new Error(res.message)
@@ -108,7 +114,14 @@ class ITrade extends ETInterface {
     return res.response
   }
 
-  async GetUserInventoryFromSteamId({ steamId, appId, page = 1, perPage, search }) {
+  async GetUserInventoryFromSteamId({
+    steamId,
+    appId,
+    page = 1,
+    perPage,
+    search,
+    sort
+  }) {
     if (steamId === undefined) {
       throw new Error('steamId not specified!')
     }
@@ -118,7 +131,17 @@ class ITrade extends ETInterface {
 
     const url = this.getUrl() + 'GetUserInventoryFromSteamId/v1'
 
-    const res = await this.request.get({ url, qs: { steam_id: steamId, app_id: appId, page, per_page: perPage, search } })
+    const res = await this.request.get({
+      url,
+      qs: {
+        steam_id: steamId,
+        app_id: appId,
+        page,
+        per_page: perPage,
+        search,
+        sort
+      }
+    })
 
     if (!res.response) {
       throw new Error(res.message)
@@ -138,26 +161,31 @@ class ITrade extends ETInterface {
     return res.response
   }
 
-  async SendOffer({ uid, token, itemsToSend, itemsToReceive, message }) {
-    if (uid === undefined) {
-      throw new Error('uid not specified!')
-    }
-
-    if (token === undefined) {
-      throw new Error('token not specified!')
-    }
-
-    if (itemsToSend === undefined) {
-      throw new Error('itemsToSend not specified!')
-    }
-
-    if (itemsToReceive === undefined) {
-      throw new Error('itemsToReceive not specified!')
+  async SendOffer({
+    uid,
+    token,
+    tradeUrl,
+    expirationTime,
+    message,
+    itemsToSend = [],
+    itemsToReceive = []
+  }) {
+    if (trade_url === undefined && (uid === undefined || token === undefined)) {
+      throw new Error('Please pass [uid + token] or [tradeUrl].')
     }
 
     const url = this.getUrl() + 'SendOffer/v1'
     const twofactor_code = this.generateToken()
-    const form = { twofactor_code, uid, token, items_to_send: itemsToSend.toString(), items_to_receive: itemsToReceive.toString(), message }
+    const form = {
+      twofactor_code,
+      uid,
+      token,
+      trade_url: tradeUrl,
+      items_to_send: itemsToSend.toString(),
+      items_to_receive: itemsToReceive.toString(),
+      expiration_time: expirationTime,
+      message
+    }
     const res = await this.request.post({ url, form })
 
     if (!res.response) {
@@ -167,22 +195,27 @@ class ITrade extends ETInterface {
     return res.response.offer
   }
 
-  async SendOfferToSteamId({ steamId, itemsToSend, itemsToReceive, message }) {
+  async SendOfferToSteamId({
+    steamId,
+    expirationTime,
+    message,
+    itemsToSend = [],
+    itemsToReceive = []
+  }) {
     if (steamId === undefined) {
       throw new Error('steamId not specified!')
     }
 
-    if (itemsToSend === undefined) {
-      throw new Error('itemsToSend not specified!')
-    }
-
-    if (itemsToReceive === undefined) {
-      throw new Error('itemsToReceive not specified!')
-    }
-
     const url = this.getUrl() + 'SendOfferToSteamId/v1'
     const twofactor_code = this.generateToken()
-    const form = { twofactor_code, steam_id: steamId, items_to_send: itemsToSend.toString(), items_to_receive: itemsToReceive.toString(), message }
+    const form = {
+      twofactor_code,
+      steam_id: steamId,
+      items_to_send: itemsToSend.toString(),
+      items_to_receive: itemsToReceive.toString(),
+      expiration_time: expirationTime,
+      message
+    }
     const res = await this.request.post({ url, form })
 
     if (!res.response) {
