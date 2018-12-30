@@ -177,7 +177,7 @@ class ITrade extends ETInterface {
     itemsToSend = [],
     itemsToReceive = []
   }) {
-    if (trade_url === undefined && (uid === undefined || token === undefined)) {
+    if (tradeUrl === undefined && (uid === undefined || token === undefined)) {
       throw new Error('Please pass [uid + token] or [tradeUrl].')
     }
 
