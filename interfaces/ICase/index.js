@@ -13,7 +13,19 @@ class ICase extends ETInterface {
     return res.response.cases
   }
 
-  async GetMinifmumOpenVolume() {
+  async GetCaseOdds({ cases }) {
+    const url = this.getUrl() + 'GetCaseOdds/v1'
+
+    const res = await this.request.get({ url, qs: { cases } })
+
+    if (!res.response) {
+      throw new Error(res.message)
+    }
+
+    return res.response.cases
+  }
+
+  async GetMinimumOpenVolume() {
     const url = this.getUrl() + 'GetMinimumOpenVolume/v1'
 
     const res = await this.request.get({ url })
@@ -23,23 +35,6 @@ class ICase extends ETInterface {
     }
 
     return res.response.count
-  }
-
-  async OpenWithKeys({ caseId, amount }) {
-    if (caseId === undefined) {
-      throw new Error('caseId not specified!')
-    }
-
-    const url = this.getUrl() + 'OpenWithKeys/v1'
-    const form = { case_id: caseId, amount }
-
-    const res = await this.request.post({ url, form })
-
-    if (!res.response) {
-      throw new Error(res.message)
-    }
-
-    return res.response.cases
   }
 
   getUrl() {
