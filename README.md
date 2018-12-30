@@ -9,6 +9,10 @@ Powerful async/await based Node.js implementation of [OPSkins WAX ExpressTrade](
 
 Stop wasting time on coding endpoint communication, event polling and bothering with two factor authentication - just pass your api key with secret and use methods out-of-the-box.
 
+### INFO FOR v.1.1: API has changed a lot from now - please update your code before updating wax-expresstrade library to the newest version.
+
+##
+
 ## Installation
 
     npm i wax-expresstrade --save
@@ -41,7 +45,11 @@ const appId = 1 // VGO
 const mySkins = await API.IUser.GetInventory({ appId })
 const anotherOneSkins = await API.ITrade.GetUserInventory({ uid: 72789, appId })
 
-console.log(`You have ${mySkins.items.length} skins and your friend has got ${anotherOneSkins.items.length} ones!`)
+console.log(
+  `You have ${mySkins.items.length} skins and your friend has got ${
+    anotherOneSkins.items.length
+  } ones!`
+)
 ```
 
 ## Methods
