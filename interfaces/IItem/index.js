@@ -12,7 +12,7 @@ class IItem extends ETInterface {
       url,
       qs: {
         app_id: appId,
-        sku: sku.toString(),
+        sku: sku ? sku.toString() : undefined,
         name,
         page,
         per_page: perPage,
@@ -84,7 +84,7 @@ class IItem extends ETInterface {
       url,
       qs: {
         app_id: appId,
-        def_id_filter: defIdFilter.toString(),
+        def_id_filter: defIdFilter ? defIdFilter.toString() : undefined,
         index_by: indexBy,
         page,
         per_page: perPage
@@ -110,7 +110,7 @@ class IItem extends ETInterface {
 
     const res = await this.request.get({
       url,
-      qs: { app_id: appId, def_id: defId.toString() }
+      qs: { app_id: appId, def_id: defId ? defId.toString() : undefined }
     })
 
     if (!res.response) {

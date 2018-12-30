@@ -67,7 +67,14 @@ class ITrade extends ETInterface {
 
     const res = await this.request.get({
       url,
-      qs: { uid, state, type, page, per_page: perPage, ids: ids.toString() }
+      qs: {
+        uid,
+        state,
+        type,
+        page,
+        per_page: perPage,
+        ids: ids ? ids.toString() : undefined
+      }
     })
 
     if (!res.response) {
