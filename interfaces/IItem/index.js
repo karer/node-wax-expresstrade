@@ -1,6 +1,37 @@
 const ETInterface = require('../ETInterface')
 
 class IItem extends ETInterface {
+  async GetAllItems({ appId, sku, name, page, perPage, sort, noExclusions }) {
+    if (appId === undefined) {
+      throw new Error('appId not specified!')
+    }
+
+    const url = this.getUrl() + 'GetAllItems/v1'
+
+    const res = await this.request.get({
+      url,
+      qs: {
+        app_id: appId,
+        sku: sku.toString(),
+        name,
+        page,
+        per_page: perPage,
+        sort,
+        no_exclusions: noExclusions
+      }
+    })
+
+    if (!res.response) {
+      throw new Error(res.message)
+    }
+
+    return {
+      currentPage: res.current_page,
+      totalPages: res.total_pages,
+      items: res.response.items
+    }
+  }
+
   async GetItemsById({ itemId }) {
     if (itemId === undefined) {
       throw new Error('itemId not specified!')
@@ -8,7 +39,10 @@ class IItem extends ETInterface {
 
     const url = this.getUrl() + 'GetItemsById/v1'
 
-    const res = await this.request.get({ url, qs: { item_id: itemId } })
+    const res = await this.request.get({
+      url,
+      qs: { item_id: itemId.toString() }
+    })
 
     if (!res.response) {
       throw new Error(res.message)
@@ -23,7 +57,7 @@ class IItem extends ETInterface {
     }
 
     const url = this.getUrl() + 'WithdrawToOpskins/v1'
-    const form = { item_id: itemId }
+    const form = { item_id: itemId.toString() }
 
     const res = await this.request.post({ url, form })
 
@@ -34,16 +68,78 @@ class IItem extends ETInterface {
     return res.response
   }
 
-  async GetItems({ skuFilter }) {
-    const url = this.getUrl() + 'GetItems/v1'
+  GetItems() {
+    throw new Error(
+      'GetItems is deprecated. Please use GetItemDefinitions instead.'
+    )
+  }
 
-    const res = await this.request.get({ url, qs: { sku_filter: skuFilter } })
+  async GetItemDefinitions({ appId, defIdFilter, indexBy, page, perPage }) {
+    if (appId === undefined) {
+      throw new Error('appId not specified!')
+    }
+
+    const url = this.getUrl() + 'GetItemDefinitions/v1'
+
+    const res = await this.request.get({
+      url,
+      qs: {
+        app_id: appId,
+        def_id_filter: defIdFilter.toString(),
+        index_by: indexBy,
+        page,
+        per_page: perPage
+      }
+    })
+
+    if (!res.response) {
+      throw new Error(res.message)
+    }
+
+    return {
+      currentPage: res.current_page,
+      totalPages: res.total_pages,
+      definitions: res.response.definitions
+    }
+  }
+
+  async GetRarityStats({ appId, defId }) {
+    if (appId === undefined) {
+      throw new Error('appId not specified!')
+    }
+
+    const url = this.getUrl() + 'GetRarityStats/v1'
+
+    const res = await this.request.get({
+      url,
+      qs: { app_id: appId, def_id: defId.toString() }
+    })
 
     if (!res.response) {
       throw new Error(res.message)
     }
 
     return res.response.items
+  }
+
+  async InstantSellRecentItems({ itemId, instantSellType = 2 }) {
+    if (itemId === undefined) {
+      throw new Error('itemId not specified!')
+    }
+
+    const url = this.getUrl() + 'WithdrawToOpskins/v1'
+    const form = {
+      item_id: itemId.toString(),
+      instant_sell_type: instantSellType
+    }
+
+    const res = await this.request.post({ url, form })
+
+    if (!res.response) {
+      throw new Error(res.message)
+    }
+
+    return res.response
   }
 
   getUrl() {
