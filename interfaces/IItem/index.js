@@ -25,11 +25,10 @@ class IItem extends ETInterface {
       throw new Error(res.message)
     }
 
-    return {
-      currentPage: res.current_page,
-      totalPages: res.total_pages,
-      items: res.response.items
-    }
+    res.response.current_page = res.current_page
+    res.response.total_pages = res.total_pages
+
+    return res.response
   }
 
   async GetItemsById({ itemId }) {
@@ -96,11 +95,10 @@ class IItem extends ETInterface {
       throw new Error(res.message)
     }
 
-    return {
-      currentPage: res.current_page,
-      totalPages: res.total_pages,
-      definitions: res.response.definitions
-    }
+    res.response.current_page = res.current_page
+    res.response.total_pages = res.total_pages
+
+    return res.response
   }
 
   async GetRarityStats({ appId, defId }) {

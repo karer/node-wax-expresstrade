@@ -108,8 +108,8 @@ class ITrade extends ETInterface {
       throw new Error(res.message)
     }
 
-    res.response.total_pages = res.total_pages
     res.response.current_page = res.current_page
+    res.response.total_pages = res.total_pages
 
     return res.response
   }
