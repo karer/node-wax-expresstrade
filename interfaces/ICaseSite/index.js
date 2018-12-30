@@ -8,7 +8,10 @@ class ICaseSite extends ETInterface {
 
     const url = this.getUrl() + 'GetKeyCount/v1'
 
-    const res = await this.request.get({ url, qs: { trade_url: tradeUrl, steam_id: steamId } })
+    const res = await this.request.get({
+      url,
+      qs: { trade_url: tradeUrl, steam_id: steamId }
+    })
 
     if (!res.response) {
       throw new Error(res.message)
@@ -33,7 +36,15 @@ class ICaseSite extends ETInterface {
     return res.response
   }
 
-  async SendKeyRequest({ tradeUrl, steamId, caseId, affiliateEthAddress, amount = 1 }) {
+  async SendKeyRequest({
+    tradeUrl,
+    steamId,
+    caseId,
+    affiliateEthAddress,
+    referralUid,
+    rebateCommissionRate,
+    amount = 1
+  }) {
     if (tradeUrl === undefined && steamId === undefined) {
       throw new Error('tradeUrl or steamId not specified!')
     }
@@ -47,7 +58,44 @@ class ICaseSite extends ETInterface {
     }
 
     const url = this.getUrl() + 'SendKeyRequest/v1'
-    const form = { trade_url: tradeUrl, steam_id: steamId, case_id: caseId, affiliate_eth_address: affiliateEthAddress, amount }
+    const form = {
+      trade_url: tradeUrl,
+      steam_id: steamId,
+      case_id: caseId,
+      affiliate_eth_address: affiliateEthAddress,
+      amount,
+      referral_uid: referralUid,
+      rebate_commission_rate: rebateCommissionRate
+    }
+
+    const res = await this.request.post({ url, form })
+
+    if (!res.response) {
+      throw new Error(res.message)
+    }
+
+    return res.response
+  }
+
+  async UpdateCommissionSettings({
+    networkId,
+    networkUserId,
+    referralCommissionRate
+  }) {
+    if (networkId === undefined) {
+      throw new Error('networkId not specified!')
+    }
+
+    if (networkUserId === undefined) {
+      throw new Error('networkUserId not specified!')
+    }
+
+    const url = this.getUrl() + 'UpdateCommissionSettings/v1'
+    const form = {
+      network_id: networkId,
+      network_user_id: networkUserId,
+      referral_commission_rate: referralCommissionRate
+    }
 
     const res = await this.request.post({ url, form })
 
