@@ -1,6 +1,6 @@
 {
   "name": "wax-expresstrade",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "Promise-based Node API for WAX Expresstrade.",
   "main": "index.js",
   "scripts": {
