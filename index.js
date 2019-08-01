@@ -30,7 +30,7 @@ class ExpressTrade extends EventEmitter {
 
     // Initialize internal settings
     this.options = {
-      apiUrl: 'https://api-trade.opskins.com/',
+      apiUrl: 'https://api-trade.wax.io/',
       pollInterval: null,
       ...options
     }
