@@ -81,11 +81,11 @@ class ExpressTrade extends EventEmitter {
       return
     }
 
-    let pollData = {}
+    const pollData = {}
 
     // First-run time poll
     if (Object.keys(this.pollData).length === 0) {
-      for (let offer of offers) {
+      for (const offer of offers) {
         pollData[offer.id] = offer
       }
 
@@ -94,7 +94,7 @@ class ExpressTrade extends EventEmitter {
       return
     }
 
-    for (let offer of offers) {
+    for (const offer of offers) {
       const newState = offer.state
 
       pollData[offer.id] = offer
